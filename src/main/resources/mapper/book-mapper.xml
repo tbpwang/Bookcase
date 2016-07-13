@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="book">
+
+    <select id="queryAll" resultType="bookcase.model.Book">
+        SELECT *
+        FROM db_bookcase.book
+        ORDER BY id
+    </select>
+
+    <select id="queryOne" parameterType="int" resultType="bookcase.model.Book">
+        SELECT *
+        FROM db_bookcase.book
+        WHERE id = #{id}
+    </select>
+
+    <delete id="remove" parameterType="int">
+        DELETE FROM db_bookcase.book
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="bookcase.model.Book">
+        UPDATE db_bookcase.book
+        SET title     = #{title},
+            author    = #{author},
+            printDate = #{printDate},
+            price     = #{price},
+            amount    = #{amount}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="create" parameterType="bookcase.model.Book" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_bookcase.book (title, author, printDate, price, amount)
+        VALUES (#{title}, #{author}, #{printDate}, #{price}, #{amount})
+    </insert>
+</mapper>
